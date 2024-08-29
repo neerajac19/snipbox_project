@@ -4,9 +4,10 @@ from rest_framework.views import APIView
 from .models import Snipbox, Tag
 from .serializers import SnippetSerializer
 from rest_framework.permissions import IsAuthenticated
-import logging
+from .serializers import TagSerializer
+#import logging
 
-logger = logging.getLogger(__name__)
+#logger = logging.getLogger(__name__)
 
 class SnippetCreateView(APIView):
     permission_classes = [IsAuthenticated]
@@ -45,3 +46,10 @@ class SnippetDeleteView(generics.DestroyAPIView):
         remaining_snippets = self.get_queryset()
         serializer = SnippetSerializer(remaining_snippets, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+
+class TagListView(generics.ListAPIView):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+    permission_classes = [IsAuthenticated]

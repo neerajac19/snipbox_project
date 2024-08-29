@@ -4,4 +4,12 @@ from .models import Snipbox, Tag
 class SnippetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snipbox
-        fields = ['id', 'title', 'note', 'created_at', 'updated_at','user', 'tags']
+        fields = ['id', 'title', 'note', 'created_at', 'updated_at', 'tags']
+
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id', 'title']
+
