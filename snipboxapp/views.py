@@ -6,6 +6,7 @@ from .serializers import SnippetSerializer
 from rest_framework.permissions import IsAuthenticated
 from .serializers import TagSerializer, SnippetOverviewSerializer
 from django.shortcuts import get_object_or_404
+
 #import logging
 
 #logger = logging.getLogger(__name__)
@@ -65,6 +66,23 @@ class TagDetailView(generics.ListAPIView):
         return Snipbox.objects.filter(tags=tag, user=self.request.user)
     
     
+
+class SnippetDetailView(generics.RetrieveAPIView):
+    queryset = Snipbox.objects.all()
+    serializer_class = SnippetSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        snippets = self.queryset.filter(user=self.request.user)
+        print(f"Available snippets for user {self.request.user}: {snippets}")
+        #snippet_id = self.kwargs.get('pk')  # Get the ID from URL parameters
+        #return Snipbox.objects.filter(pk=snippet_id, user=self.request.user)
+        
+        return self.queryset.filter(user=self.request.user)
+    
+
+
+
 class SnippetOverviewView(generics.GenericAPIView):
     serializer_class = SnippetOverviewSerializer
     permission_classes = [IsAuthenticated]
