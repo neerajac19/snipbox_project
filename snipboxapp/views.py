@@ -93,3 +93,16 @@ class SnippetOverviewView(generics.GenericAPIView):
             'snippets': serializer.data
         }
         return Response(data)
+    
+class SnippetUpdateView(generics.UpdateAPIView):
+    queryset = Snipbox.objects.all()
+    serializer_class = SnippetSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        snippets = self.queryset.filter(user=self.request.user)
+        print(f"Available snippets for user {self.request.user}: {snippets}")
+        return self.queryset.filter(user=self.request.user)
+    
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)

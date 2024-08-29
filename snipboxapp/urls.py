@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SnippetCreateView, SnippetDeleteView, TagListView, TagDetailView, SnippetDetailView, SnippetOverviewView
+from .views import SnippetCreateView, SnippetDeleteView, TagListView, TagDetailView, SnippetDetailView, SnippetOverviewView, SnippetUpdateView
 
 
 urlpatterns = [
@@ -9,6 +9,8 @@ urlpatterns = [
     path('tags/<int:pk>/', TagDetailView.as_view(), name='tag-detail'),
     path('api/snippets/<int:pk>/', SnippetDetailView.as_view(), name='snippet-detail'),
     path('api/snippets/overview/', SnippetOverviewView.as_view(), name='snippet-overview'),
+    path('api/snippets/<int:pk>/update/', SnippetUpdateView.as_view(), name='snippet-update'),
+
 ]
 
 
