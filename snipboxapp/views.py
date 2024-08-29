@@ -53,3 +53,12 @@ class TagListView(generics.ListAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [IsAuthenticated]
+
+
+class TagDetailView(generics.ListAPIView):
+    serializer_class = SnippetSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        tag = Tag.objects.get(pk=self.kwargs['pk'])
+        return Snipbox.objects.filter(tags=tag, user=self.request.user)
